@@ -1,10 +1,13 @@
 import Head from 'next/head'
-import { Inter } from 'next/font/google'
 import InputNameUser from './InputNameUser'
+import { useState, createContext } from 'react';
+import Board from './Board';
 
-const inter = Inter({ subsets: ['latin'] })
+export const PlayerContext = createContext(null);
 
 export default function Home() {
+  const [player1, setPlayer1] = useState('');
+  const [player2, setPlayer2] = useState('');
   return (
     <>
       <Head>
@@ -14,8 +17,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <InputNameUser player={1}/>
-        <InputNameUser player={2}/>
+        <PlayerContext.Provider value={{player1, setPlayer1, player2, setPlayer2}}>
+          {player1 === '' && player2 === '' && (
+            <InputNameUser playerNumber={1} />
+          )}
+          {player1 !== '' && player2 === '' && (
+            <InputNameUser playerNumber={2} />
+          )}
+          {player1 !== '' && player2 !== '' && (
+             <Board />
+          )}
+        </PlayerContext.Provider>
+        
         {/* 2 calls of InputNameUser component*/}
         {/* call Board component*/}
         {/*  9 calls of Square component*/}
