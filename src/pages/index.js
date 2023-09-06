@@ -2,12 +2,14 @@ import Head from 'next/head'
 import InputNameUser from './InputNameUser'
 import { useState, createContext } from 'react';
 import Board from './Board';
+import EndGame from './endGame';
 
 export const PlayerContext = createContext(null);
 
 export default function Home() {
   const [player1, setPlayer1] = useState('');
   const [player2, setPlayer2] = useState('');
+  const [isEndGame, setIsEndGame] = useState(false);
   return (
     <>
       <Head>
@@ -17,15 +19,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <PlayerContext.Provider value={{player1, setPlayer1, player2, setPlayer2}}>
+        <PlayerContext.Provider value={{player1, setPlayer1, player2, setPlayer2, isEndGame, setIsEndGame}}>
           {player1 === '' && player2 === '' && (
             <InputNameUser playerNumber={1} />
           )}
           {player1 !== '' && player2 === '' && (
             <InputNameUser playerNumber={2} />
           )}
-          {player1 !== '' && player2 !== '' && (
+          {player1 !== '' && player2 !== '' && !isEndGame && (
              <Board />
+          )}
+          {isEndGame && (
+            <EndGame />
           )}
         </PlayerContext.Provider>
         

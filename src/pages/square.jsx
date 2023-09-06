@@ -8,7 +8,7 @@ export default function Square({symbol, onClick, value}) {
   }
   return (
     <>
-      <button className="square" onClick={() => {handleClick(); onClick()}}>{fill ? fill : '_'}</button>
+      <button disabled={fill === '_'} className="square" onClick={() => {handleClick(); onClick()}}>{fill ? fill : '_'}</button>
     </>
   )
 }

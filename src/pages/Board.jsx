@@ -5,34 +5,54 @@ import Square from "./Square";
 export default function Board() {
   const [whichPlayer, setWhichPlayer] = useState(true);
   const [boardState, setBoardState] = useState(JSON.parse(localStorage.getItem("boardState")) || Array(9).fill(null));
+  const {
+    player1,
+    player2,
+    setIsEndGame
+  } = useContext(PlayerContext);
+
 
   useEffect(() => {
     localStorage.setItem("boardState", JSON.stringify(boardState));
   }, [boardState]);
 
-  const {
-    player1,
-    player2
-  } = useContext(PlayerContext);
+  
+  
 
-  const victoryPattern = [
-    "0,1,2",
-    "3,4,5",
-    "6,7,8",
-    "0,3,6",
-    "1,4,7",
-    "2,5,8",
-    "0,4,8",
-    "2,4,6"
-  ]
+  useEffect(()=>{
+    const victoryPattern = [
+    [0,1,2],
+    [3,4,5],
+    [6,7,8],
+    [0,3,6],
+    [1,4,7],
+    [2,5,8],
+    [0,4,8],
+    [2,4,6]
+  ];
+    victoryPattern.forEach((pattern) => {
+      if(boardState[pattern[0]] === boardState[pattern[1]] && boardState[pattern[1]] === boardState[pattern[2]] && boardState[pattern[0]] !== null){
+        console.log('Victory');
+        setBoardState(Array(9).fill(null));
+        setIsEndGame(true);
+        return
+      }
+    })
+    const boardFull = boardState.find((element) => element === null)
+      if(boardFull === undefined){
+        console.log('Null');
+        setBoardState(Array(9).fill(null));
+        setIsEndGame(true);
+        return
+      }
+  },[boardState])
 
   function handleVictory (i) {
     const currentBoardState = boardState.slice()
     setWhichPlayer(!whichPlayer)
     currentBoardState[i] = whichPlayer ? 'O' : 'X'
     setBoardState(currentBoardState)
-    console.log(currentBoardState)
-    //   check boardState content, if there is a combination of O or X that is in victoryPattern
+    
   }
 
   return(

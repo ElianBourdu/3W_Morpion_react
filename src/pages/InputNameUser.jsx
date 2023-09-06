@@ -2,7 +2,7 @@ import { useContext, useState} from 'react'
 import { PlayerContext } from '.';
 
 
-export default function inputNameUser({playerNumber}) {
+export default function InputNameUser({playerNumber}) {
   const [username, setUsername] = useState('');
   const { setPlayer1, setPlayer2 } = useContext(PlayerContext);
   
