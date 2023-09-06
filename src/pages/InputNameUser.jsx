@@ -15,7 +15,6 @@ export default function inputNameUser({playerNumber}) {
     if(playerNumber === 2){
       setPlayer2(username);
     }
-    
   }
 
   return (
