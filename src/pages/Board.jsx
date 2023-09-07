@@ -4,20 +4,24 @@ import Square from "./Square";
 
 export default function Board() {
   const [whichPlayer, setWhichPlayer] = useState(true);
-  const [boardState, setBoardState] = useState(JSON.parse(localStorage.getItem("boardState")) || Array(9).fill(null));
   const {
     player1,
     player2,
-    setIsEndGame
+    setIsEndGame,
+    boardState,
+    setBoardState
   } = useContext(PlayerContext);
 
+  useEffect(() =>{
+    setBoardState(JSON.parse(localStorage.getItem("boardState")) || Array(9).fill(null))
+    console.log(boardState)
+  },[setBoardState])
 
   useEffect(() => {
-    localStorage.setItem("boardState", JSON.stringify(boardState));
+    if(boardState.includes('X') || boardState.includes('O')){
+      localStorage.setItem("boardState", JSON.stringify(boardState));
+    }
   }, [boardState]);
-
-  
-  
 
   useEffect(()=>{
     const victoryPattern = [

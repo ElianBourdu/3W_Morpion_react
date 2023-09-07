@@ -10,6 +10,10 @@ export default function Home() {
   const [player1, setPlayer1] = useState('');
   const [player2, setPlayer2] = useState('');
   const [isEndGame, setIsEndGame] = useState(false);
+  const [boardState, setBoardState] = useState(Array(9).fill(null));
+
+  
+
   return (
     <>
       <Head>
@@ -19,7 +23,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <PlayerContext.Provider value={{player1, setPlayer1, player2, setPlayer2, isEndGame, setIsEndGame}}>
+        <PlayerContext.Provider value={{player1, setPlayer1, player2, setPlayer2, boardState, setBoardState, isEndGame, setIsEndGame}}>
           {player1 === '' && player2 === '' && (
             <InputNameUser playerNumber={1} />
           )}
